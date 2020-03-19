@@ -11,14 +11,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table(name="cards")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Card {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private Integer id;
 	
 	@JoinColumn(name = "bankAccountId")
 	@ManyToOne
@@ -30,6 +33,14 @@ public class Card {
 	private Instant expirationDate;
 	
 	public Card() {}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public BankAccount getBankAccount() {
 		return bankAccount;
