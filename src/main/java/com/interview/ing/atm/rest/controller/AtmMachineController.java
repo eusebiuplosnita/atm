@@ -22,26 +22,27 @@ public class AtmMachineController {
 
 	@Autowired
 	private AtmService atmService;
-	
+
 	@PostMapping("/cards")
 	public Card insertCard(@RequestBody Card card) {
 		return null;
 	}
-	
+
 	@DeleteMapping("/card/{cardId}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public void ejectCard(@PathVariable Integer cardId) {
 		atmService.ejectCard(cardId);
 	}
-	
+
 	@GetMapping("/card/{cardId}/account")
-	public BankAccount getAccountBalance(@PathVariable Integer cardId) {
+	public BankAccount getAccountBalance(@PathVariable Integer cardId) throws Exception {
 		return atmService.getAccountBalance(cardId);
 	}
-	
+
 	@PostMapping("/card/{cardId}/account")
-	public BankAccount executeTransaction(@PathVariable Integer cardId, @RequestBody Transaction transaction) {
+	public BankAccount executeTransaction(@PathVariable Integer cardId, @RequestBody Transaction transaction)
+			throws Exception {
 		return atmService.executeTransaction(cardId, transaction);
 	}
-	
+
 }
