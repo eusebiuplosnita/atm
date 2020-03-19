@@ -1,7 +1,11 @@
 package com.interview.ing.atm.machine.service;
 
+import java.time.Instant;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +19,13 @@ public class AtmService {
 	@Autowired
 	private CardRepository cardRepository;
 	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
 	public Card insertCard(Card card) {
-		//validate card
+		if (card.getExpirationDate().compareTo(Instant.now()) < 1) {
+			logger.error("The inserted card is expired");
+			throw new IllegalArgumentException("The card is expired");
+		}
 		return cardRepository.save(card);
 	}
 	
@@ -26,24 +35,23 @@ public class AtmService {
 	
 	public BankAccount getAccountBalance(Integer cardId) {
 		Optional<Card> optionalCard = cardRepository.findById(cardId);
-		if(optionalCard.isPresent()) {
-			return optionalCard.get().getBankAccount();
-		} else {
-			//throw exception here
-			return null;
+		if(!optionalCard.isPresent()) {
+			logger.error("Card is not inserted");
+			throw new NoSuchElementException("Please insert the card.");
 		}
+		return optionalCard.get().getBankAccount();
 	}
 	
 	public BankAccount executeTransaction(Integer cardId, Transaction transaction) {
 		Optional<Card> optionalCard = cardRepository.findById(cardId);
-		if(optionalCard.isPresent()) {
-			//execute transaction
-			cardRepository.save(optionalCard.get());
-			return optionalCard.get().getBankAccount();
-		} else {
-			//throw exception here
-			return null;
+		if(!optionalCard.isPresent()) {
+			logger.error("Card is not inserted");
+			throw new NoSuchElementException("Please insert the card.");
 		}
+		
+		//execute transaction
+		cardRepository.save(optionalCard.get());
+		return optionalCard.get().getBankAccount();
 	}
 	
 }
