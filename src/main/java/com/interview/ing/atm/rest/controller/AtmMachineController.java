@@ -19,11 +19,11 @@ import com.interview.ing.atm.machine.service.Transaction;
 @RestController
 @RequestMapping(value = "/api/v1/atm")
 public class AtmMachineController {
-
+	
 	@Autowired
 	private AtmService atmService;
 
-	@PostMapping("/cards")
+	@PostMapping(path = "/cards", consumes = "application/json", produces = "application/json")
 	public Card insertCard(@RequestBody Card card) {
 		return atmService.insertCard(card);
 	}

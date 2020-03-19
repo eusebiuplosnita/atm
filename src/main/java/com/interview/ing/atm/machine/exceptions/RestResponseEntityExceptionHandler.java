@@ -44,6 +44,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 		public ServiceError(HttpStatus status, Throwable exception) {
 			this();
+			this.status = status;
 			this.message = exception.getMessage();
 		}
 
