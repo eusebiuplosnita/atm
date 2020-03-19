@@ -28,19 +28,20 @@ public class AtmMachineController {
 		return null;
 	}
 	
-	@DeleteMapping("/card/{id}")
+	@DeleteMapping("/card/{cardId}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void ejectCard() {
+	public void ejectCard(@PathVariable Integer cardId) {
+		atmService.ejectCard(cardId);
 	}
 	
 	@GetMapping("/card/{cardId}/account")
-	public BankAccount getAccountBalance(@PathVariable String cardId) {
-		return null;
+	public BankAccount getAccountBalance(@PathVariable Integer cardId) {
+		return atmService.getAccountBalance(cardId);
 	}
 	
-	@PostMapping("/card/{id}/account")
-	public BankAccount executeTransaction(@PathVariable String cardId, @RequestBody Transaction transaction) {
-		return null;
+	@PostMapping("/card/{cardId}/account")
+	public BankAccount executeTransaction(@PathVariable Integer cardId, @RequestBody Transaction transaction) {
+		return atmService.executeTransaction(cardId, transaction);
 	}
 	
 }
