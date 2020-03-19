@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.interview.ing.atm.machine.model.BankAccount;
+import com.interview.ing.atm.machine.model.Card;
 import com.interview.ing.atm.machine.service.AtmService;
-import com.interview.ing.atm.machine.service.BankAccount;
-import com.interview.ing.atm.machine.service.Card;
 import com.interview.ing.atm.machine.service.Transaction;
 
 @RestController
@@ -23,7 +23,7 @@ public class AtmMachineController {
 	@Autowired
 	private AtmService atmService;
 	
-	@PostMapping("/card")
+	@PostMapping("/cards")
 	public Card insertCard(@RequestBody Card card) {
 		return null;
 	}
