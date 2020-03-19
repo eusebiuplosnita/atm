@@ -1,6 +1,7 @@
 package com.interview.ing.atm.machine.exceptions;
 
 import java.time.Instant;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		return buildResponseEntity(new ServiceError(HttpStatus.BAD_REQUEST, ex));
 	}
 
-	@ExceptionHandler(NotFoundException.class)
-	protected ResponseEntity<Object> handleNotFoundException(NotFoundException ex) {
+	@ExceptionHandler(NoSuchElementException.class)
+	protected ResponseEntity<Object> handleNotFoundException(NoSuchElementException ex) {
 		return buildResponseEntity(new ServiceError(HttpStatus.NOT_FOUND, ex));
 	}
 

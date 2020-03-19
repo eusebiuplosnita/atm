@@ -25,24 +25,24 @@ public class AtmMachineController {
 
 	@PostMapping("/cards")
 	public Card insertCard(@RequestBody Card card) {
-		return null;
+		return atmService.insertCard(card);
 	}
 
 	@DeleteMapping("/card/{cardId}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void ejectCard(@PathVariable Integer cardId) {
-		atmService.ejectCard(cardId);
+	public void ejectCard(@PathVariable String cardId) {
+		atmService.ejectCard(Integer.parseInt(cardId));
 	}
 
 	@GetMapping("/card/{cardId}/account")
-	public BankAccount getAccountBalance(@PathVariable Integer cardId) throws Exception {
-		return atmService.getAccountBalance(cardId);
+	public BankAccount getAccountBalance(@PathVariable String cardId) throws Exception {
+		return atmService.getAccountBalance(Integer.parseInt(cardId));
 	}
 
 	@PostMapping("/card/{cardId}/account")
-	public BankAccount executeTransaction(@PathVariable Integer cardId, @RequestBody Transaction transaction)
+	public BankAccount executeTransaction(@PathVariable String cardId, @RequestBody Transaction transaction)
 			throws Exception {
-		return atmService.executeTransaction(cardId, transaction);
+		return atmService.executeTransaction(Integer.parseInt(cardId), transaction);
 	}
 
 }
