@@ -11,11 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 @Entity
 @Table(name="cards")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Card {
 
 	@Id
@@ -33,6 +30,13 @@ public class Card {
 	private Instant expirationDate;
 	
 	public Card() {}
+	
+	public Card(Integer id, BankAccount bankAccount, String owner, Instant expirationDate) {
+		this.setId(id);
+		this.setBankAccount(bankAccount);
+		this.setExpirationDate(expirationDate);
+		this.setOwner(owner);
+	}
 	
 	public Integer getId() {
 		return id;
