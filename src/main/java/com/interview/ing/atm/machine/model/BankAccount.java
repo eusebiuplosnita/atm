@@ -19,7 +19,7 @@ public class BankAccount {
 	@Id
 	@Column(name = "bankAccountId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String bankAccountId;
+	private Integer bankAccountId;
 	
 	@Column(name = "ibanCode")
 	private String ibanCode;
@@ -32,15 +32,22 @@ public class BankAccount {
 	
 	public BankAccount() {}
 	
-	public BankAccount(String id) {
+	public BankAccount(Integer id) {
 		this.setBankAccountId(id);
 	}
+	
+	public BankAccount(Integer id, String ibanCode, Double balance, List<Transaction> transactions) {
+		this.setBankAccountId(id);
+		this.setIbanCode(ibanCode);
+		this.setBalance(balance);
+		this.setTransactions(transactions);
+	}
 
-	public String getBankAccountId() {
+	public Integer getBankAccountId() {
 		return this.bankAccountId;
 	}
 	
-	public void setBankAccountId(String id) {
+	public void setBankAccountId(Integer id) {
 		this.bankAccountId = id;
 	}
 	

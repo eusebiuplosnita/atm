@@ -29,12 +29,12 @@ public class AtmService {
 
 	public Card insertCard(Card card) {
 		if (card.getExpirationDate().compareTo(Instant.now()) < 1) {
-			logger.error("The inserted card is expired");
+			logger.warn("The inserted card is expired");
 			throw new IllegalArgumentException("The card is expired");
 		}
 
 		if (cardRepository.findAll().iterator().hasNext()) {
-			logger.error("Cannot insert more than one card");
+			logger.warn("Cannot insert more than one card");
 			throw new IllegalArgumentException("Cannot insert more than one card");
 		}
 
@@ -48,7 +48,7 @@ public class AtmService {
 	public BankAccount getAccountBalance(Integer cardId) {
 		Optional<Card> optionalCard = cardRepository.findById(cardId);
 		if (!optionalCard.isPresent()) {
-			logger.error("Card is not inserted");
+			logger.warn("Card is not inserted");
 			throw new NoSuchElementException("Please insert the card.");
 		}
 
@@ -64,7 +64,7 @@ public class AtmService {
 	public BankAccount executeTransaction(Integer cardId, Transaction transaction) {
 		Optional<Card> optionalCard = cardRepository.findById(cardId);
 		if (!optionalCard.isPresent()) {
-			logger.error("Card is not inserted");
+			logger.warn("Card is not inserted");
 			throw new NoSuchElementException("Please insert the card.");
 		}
 		
@@ -83,7 +83,7 @@ public class AtmService {
 					return bankAccountRepository.save(bankAccount);
 				} 
 			case "deposit": {
-					bankAccount.setBalance(bankAccount.getBalance() - transaction.getAmount());
+					bankAccount.setBalance(bankAccount.getBalance() + transaction.getAmount());
 					return bankAccountRepository.save(bankAccount);
 				} 
 			default: 

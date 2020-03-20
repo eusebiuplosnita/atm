@@ -6,10 +6,16 @@ public class Transaction {
 
 	private String type;
 	
-	private double amount;
+	private Double amount;
 	
 	private Instant date;
 
+	public Transaction(String type, Double amount, Instant date) {
+		this.setType(type);
+		this.setDate(date);
+		this.setAmount(amount);
+	}
+	
 	public Instant getDate() {
 		return date;
 	}
