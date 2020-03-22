@@ -1,34 +1,37 @@
-package com.interview.ing.atm.machine.model;
-
-import java.util.List;
+package com.interview.ing.atm.machine.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.Table;
 
-public class BankAccount {
+@Entity
+@Table(name="bankAccounts")
+public class BankAccountEntity {
 	
+	@Id
+	@Column(name = "bankAccountId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bankAccountId;
 	
+	@Column(name = "ibanCode")
 	private String ibanCode;
 	
+	@Column(name = "balance")
 	private double balance;
+		
+	public BankAccountEntity() {}
 	
-	private List<Transaction> transactions;
-	
-	public BankAccount() {}
-	
-	public BankAccount(Integer id) {
+	public BankAccountEntity(Integer id) {
 		this.setBankAccountId(id);
 	}
 	
-	public BankAccount(Integer id, String ibanCode, Double balance, List<Transaction> transactions) {
+	public BankAccountEntity(Integer id, String ibanCode, Double balance) {
 		this.setBankAccountId(id);
 		this.setIbanCode(ibanCode);
 		this.setBalance(balance);
-		this.setTransactions(transactions);
 	}
 
 	public Integer getBankAccountId() {
@@ -53,13 +56,5 @@ public class BankAccount {
 
 	public void setBalance(double balance) {
 		this.balance = balance;
-	}
-	
-	public List<Transaction> getTransactions() {
-		return this.transactions;
-	}
-	
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
 	}
 }

@@ -1,4 +1,4 @@
-package com.interview.ing.atm.machine.model;
+package com.interview.ing.atm.machine.dtos;
 
 import java.time.Instant;
 

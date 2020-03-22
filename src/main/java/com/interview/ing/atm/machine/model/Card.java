@@ -2,29 +2,12 @@ package com.interview.ing.atm.machine.model;
 
 import java.time.Instant;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="cards")
 public class Card {
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JoinColumn(name = "bankAccountId")
-	@ManyToOne
 	private BankAccount bankAccount;
 	
-	@Column(name = "owner")
 	private String owner;
 	
 	private Instant expirationDate;
