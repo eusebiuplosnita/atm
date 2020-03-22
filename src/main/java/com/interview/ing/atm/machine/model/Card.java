@@ -4,7 +4,7 @@ import java.time.Instant;
 
 public class Card {
 
-	private Integer id;
+	private Integer cardId;
 	
 	private BankAccount bankAccount;
 	
@@ -15,18 +15,18 @@ public class Card {
 	public Card() {}
 	
 	public Card(Integer id, BankAccount bankAccount, String owner, Instant expirationDate) {
-		this.setId(id);
+		this.setCardId(id);
 		this.setBankAccount(bankAccount);
 		this.setExpirationDate(expirationDate);
 		this.setOwner(owner);
 	}
 	
-	public Integer getId() {
-		return id;
+	public Integer getCardId() {
+		return cardId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCardId(Integer id) {
+		this.cardId = id;
 	}
 
 	public BankAccount getBankAccount() {

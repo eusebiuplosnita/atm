@@ -1,8 +1,8 @@
-package com.interview.ing.atm.machine.model;
+package com.interview.ing.atm.machine.dtos;
 
 import java.util.List;
 
-public class BankAccount {
+public class BankAccountDto {
 	
 	private Integer bankAccountId;
 	
@@ -10,15 +10,15 @@ public class BankAccount {
 	
 	private double balance;
 	
-	private List<Transaction> transactions;
+	private List<TransactionDto> transactions;
 	
-	public BankAccount() {}
+	public BankAccountDto() {}
 	
-	public BankAccount(Integer id) {
+	public BankAccountDto(Integer id) {
 		this.setBankAccountId(id);
 	}
 	
-	public BankAccount(Integer id, String ibanCode, Double balance, List<Transaction> transactions) {
+	public BankAccountDto(Integer id, String ibanCode, Double balance, List<TransactionDto> transactions) {
 		this.setBankAccountId(id);
 		this.setIbanCode(ibanCode);
 		this.setBalance(balance);
@@ -49,11 +49,11 @@ public class BankAccount {
 		this.balance = balance;
 	}
 	
-	public List<Transaction> getTransactions() {
+	public List<TransactionDto> getTransactions() {
 		return this.transactions;
 	}
 	
-	public void setTransactions(List<Transaction> transactions) {
+	public void setTransactions(List<TransactionDto> transactions) {
 		this.transactions = transactions;
 	}
 }

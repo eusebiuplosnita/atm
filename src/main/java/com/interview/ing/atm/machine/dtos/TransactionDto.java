@@ -1,9 +1,9 @@
-package com.interview.ing.atm.machine.model;
+package com.interview.ing.atm.machine.dtos;
 
 import java.time.Instant;
 
-public class Transaction {
-	
+public class TransactionDto {
+
 	private Integer id;
 
 	private String type;
@@ -12,9 +12,7 @@ public class Transaction {
 	
 	private Instant date;
 
-	public Transaction() {}
-	
-	public Transaction(String type, Double amount, Instant date) {
+	public TransactionDto(String type, Double amount, Instant date) {
 		this.setType(type);
 		this.setDate(date);
 		this.setAmount(amount);

@@ -1,10 +1,14 @@
 package com.interview.ing.atm.machine.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,16 +16,19 @@ import javax.persistence.Table;
 public class BankAccountEntity {
 	
 	@Id
-	@Column(name = "bankAccountId")
+	@Column(name = "bank_account_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bankAccountId;
 	
-	@Column(name = "ibanCode")
+	@Column(name = "iban_code")
 	private String ibanCode;
-	
+
 	@Column(name = "balance")
 	private double balance;
-		
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<TransactionEntity> transactions;
+	
 	public BankAccountEntity() {}
 	
 	public BankAccountEntity(Integer id) {
