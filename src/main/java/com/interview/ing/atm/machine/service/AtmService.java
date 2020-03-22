@@ -3,7 +3,6 @@ package com.interview.ing.atm.machine.service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -13,17 +12,18 @@ import org.springframework.stereotype.Service;
 
 import com.interview.ing.atm.machine.model.BankAccount;
 import com.interview.ing.atm.machine.model.Card;
-import com.interview.ing.atm.machine.repository.BankAccountRepository;
-import com.interview.ing.atm.machine.repository.CardRepository;
+import com.interview.ing.atm.machine.model.Transaction;
+import com.interview.ing.atm.machine.repository.BankAccountRepositoryImpl;
+import com.interview.ing.atm.machine.repository.CardRepositoryImpl;
 
 @Service("atmService")
 public class AtmService {
 
 	@Autowired
-	private CardRepository cardRepository;
+	private CardRepositoryImpl cardRepository;
 	
 	@Autowired 
-	private BankAccountRepository bankAccountRepository;
+	private BankAccountRepositoryImpl bankAccountRepository;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -46,13 +46,13 @@ public class AtmService {
 	}
 
 	public BankAccount getAccountBalance(Integer cardId) {
-		Optional<Card> optionalCard = cardRepository.findById(cardId);
-		if (!optionalCard.isPresent()) {
+		Card card = cardRepository.findById(cardId);
+		if (card == null) {
 			logger.warn("Card is not inserted");
 			throw new NoSuchElementException("Please insert the card.");
 		}
 
-		BankAccount account = optionalCard.get().getBankAccount();
+		BankAccount account = card.getBankAccount();
 		
 		//return only the transactions from the last 30 days.
 		account.setTransactions(account.getTransactions().stream()
@@ -62,8 +62,8 @@ public class AtmService {
 	}
 
 	public BankAccount executeTransaction(Integer cardId, Transaction transaction) {
-		Optional<Card> optionalCard = cardRepository.findById(cardId);
-		if (!optionalCard.isPresent()) {
+		Card card = cardRepository.findById(cardId);
+		if (card == null) {
 			logger.warn("Card is not inserted");
 			throw new NoSuchElementException("Please insert the card.");
 		}
@@ -73,7 +73,7 @@ public class AtmService {
 			throw new IllegalArgumentException("Invalid transaction date.");
 		}
 		
-		BankAccount bankAccount = optionalCard.get().getBankAccount();
+		BankAccount bankAccount = card.getBankAccount();
 		switch (transaction.getType()) {
 			case "withdraw": {
 					if (bankAccount.getBalance() - transaction.getAmount() < 0) {

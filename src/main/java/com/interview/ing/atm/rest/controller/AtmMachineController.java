@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.interview.ing.atm.machine.dtos.CardDto;
 import com.interview.ing.atm.machine.model.BankAccount;
 import com.interview.ing.atm.machine.model.Card;
-import com.interview.ing.atm.machine.model.CardDto;
+import com.interview.ing.atm.machine.model.Transaction;
 import com.interview.ing.atm.machine.service.AtmService;
-import com.interview.ing.atm.machine.service.Transaction;
 
 @RestController
 @RequestMapping(value = "/api/v1/atm")

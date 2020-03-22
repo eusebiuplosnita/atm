@@ -1,8 +1,10 @@
-package com.interview.ing.atm.machine.service;
+package com.interview.ing.atm.machine.model;
 
 import java.time.Instant;
 
 public class Transaction {
+	
+	private Integer id;
 
 	private String type;
 	
@@ -38,5 +40,13 @@ public class Transaction {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }
