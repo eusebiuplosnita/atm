@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CardDto {
 
-	private String id;
+	private String cardId;
 	
-	private String bankAccount;
+	private BankAccountDto bankAccount;
 	
 	private String owner;
 	
@@ -17,27 +17,27 @@ public class CardDto {
 	
 	public CardDto() {}
 	
-	public CardDto(String id, String bankAccountId, String owner, Instant expirationDate) {
-		this.setId(id);
-		this.setBankAccount(bankAccountId);
+	public CardDto(String id, BankAccountDto bankAccountDto, String owner, Instant expirationDate) {
+		this.setCardId(id);
+		this.setBankAccount(bankAccountDto);
 		this.setExpirationDate(expirationDate);
 		this.setOwner(owner);
 	}
 	
-	public String getId() {
-		return id;
+	public String getCardId() {
+		return cardId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCardId(String id) {
+		this.cardId = id;
 	}
 
-	public String getBankAccount() {
+	public BankAccountDto getBankAccount() {
 		return bankAccount;
 	}
 
-	public void setBankAccount(String bankAccountId) {
-		this.bankAccount = bankAccountId;
+	public void setBankAccount(BankAccountDto bankAccount) {
+		this.bankAccount = bankAccount;
 	}
 
 	public String getOwner() {

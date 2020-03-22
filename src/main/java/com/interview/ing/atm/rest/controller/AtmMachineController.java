@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.interview.ing.atm.machine.dtos.CardDto;
+import com.interview.ing.atm.machine.dtos.TransactionDto;
 import com.interview.ing.atm.machine.model.BankAccount;
 import com.interview.ing.atm.machine.model.Card;
 import com.interview.ing.atm.machine.model.Transaction;
@@ -23,9 +24,9 @@ import com.interview.ing.atm.machine.service.AtmService;
 @RestController
 @RequestMapping(value = "/api/v1/atm")
 public class AtmMachineController {
-	
+
 	private final ModelMapper modelMapper = new ModelMapper();
-	
+
 	@Autowired
 	private AtmService atmService;
 
@@ -48,9 +49,9 @@ public class AtmMachineController {
 	}
 
 	@PostMapping(path = "/card/{cardId}/account", consumes = "application/json", produces = "application/json")
-	public BankAccount executeTransaction(@PathVariable String cardId, @RequestBody Transaction transaction)
+	public BankAccount executeTransaction(@PathVariable String cardId, @RequestBody TransactionDto transaction)
 			throws Exception {
-		return atmService.executeTransaction(Integer.parseInt(cardId), transaction);
+		return atmService.executeTransaction(Integer.parseInt(cardId), modelMapper.map(transaction, Transaction.class));
 	}
 
 }

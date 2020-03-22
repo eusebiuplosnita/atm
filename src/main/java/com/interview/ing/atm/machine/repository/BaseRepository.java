@@ -21,26 +21,27 @@ public abstract class BaseRepository<R,S,T> {
 	
 	private Class<S> entityClass;
 	
-	private ModelMapper mapper;
+	protected ModelMapper mapper;
 	
 	protected BaseRepository(Class<R> domainClass, Class<S> entityClass) {
 		this.domainClass = domainClass;
 		this.entityClass = entityClass;
+		this.mapper = new ModelMapper();
 	}
 	
 	protected abstract CrudRepository<S,T> getRepository();
 	
-	public R findById(T id) {
+	public R findEntityById(T id) {
 		Optional<S> entity = getRepository().findById(id);
 		return mapper.map(entity.get(), this.domainClass);
 	}
 	
-	public List<R> findAll() {
+	public List<R> findAllEntities() {
 		return StreamSupport.stream(this.getRepository().findAll().spliterator(), false)
 				.map(entity -> mapper.map(entity, this.domainClass)).collect(Collectors.toList());
 	}
 	
-	public R save(R domainObject) {
+	public R saveEntity(R domainObject) {
 		if (domainObject == null) {
 			throw new IllegalArgumentException("The object to be saved is null!");
 		}
@@ -49,7 +50,7 @@ public abstract class BaseRepository<R,S,T> {
 		return mapper.map(savedEntity, this.domainClass);
 	}
 	
-	public void deleteById(T id) {
+	public void deleteEntityById(T id) {
 		if (id == null) {
 			throw new IllegalArgumentException("The id of the object to be deleted cannot be null!");
 		}

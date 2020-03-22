@@ -2,28 +2,34 @@ package com.interview.ing.atm.machine.entities;
 
 import java.time.Instant;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
+@Cacheable(false)
 @Table(name="cards")
 public class CardEntity {
 
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "card_id")
+	private Integer cardId;
 	
-	@Column(name = "bankAccountId")
+	@JoinColumn(name = "bank_account_id")
+	@ManyToOne
 	private BankAccountEntity bankAccount;
 	
 	@Column(name = "owner")
 	private String owner;
 	
+	@Column(name="expiration_date")
 	private Instant expirationDate;
 	
 	public CardEntity() {}
@@ -36,11 +42,11 @@ public class CardEntity {
 	}
 	
 	public Integer getId() {
-		return id;
+		return cardId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.cardId = id;
 	}
 
 	public BankAccountEntity getBankAccount() {

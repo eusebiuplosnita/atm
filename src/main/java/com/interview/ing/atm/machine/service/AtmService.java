@@ -1,9 +1,7 @@
 package com.interview.ing.atm.machine.service;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,17 +11,20 @@ import org.springframework.stereotype.Service;
 import com.interview.ing.atm.machine.model.BankAccount;
 import com.interview.ing.atm.machine.model.Card;
 import com.interview.ing.atm.machine.model.Transaction;
-import com.interview.ing.atm.machine.repository.BankAccountRepositoryImpl;
+import com.interview.ing.atm.machine.repository.CardRepository;
 import com.interview.ing.atm.machine.repository.CardRepositoryImpl;
 
 @Service("atmService")
 public class AtmService {
 
 	@Autowired
-	private CardRepositoryImpl cardRepository;
+	private CardRepositoryImpl cardRepositoryImpl;
+
+	@Autowired
+	private BankAccountService bankAccountService;
 	
-	@Autowired 
-	private BankAccountRepositoryImpl bankAccountRepository;
+	@Autowired
+	private CardRepository cardRepository;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -33,12 +34,13 @@ public class AtmService {
 			throw new IllegalArgumentException("The card is expired");
 		}
 
-		if (cardRepository.findAll().iterator().hasNext()) {
+		if (cardRepositoryImpl.findAllEntities().iterator().hasNext()) {
 			logger.warn("Cannot insert more than one card");
 			throw new IllegalArgumentException("Cannot insert more than one card");
 		}
 
-		return cardRepository.save(card);
+		Card savedCard = cardRepositoryImpl.saveEntity(card);
+		return cardRepositoryImpl.findEntityById(savedCard.getCardId());
 	}
 
 	public void ejectCard(Integer cardId) {
@@ -46,49 +48,31 @@ public class AtmService {
 	}
 
 	public BankAccount getAccountBalance(Integer cardId) {
-		Card card = cardRepository.findById(cardId);
+		Card card = cardRepositoryImpl.findEntityById(cardId);
 		if (card == null) {
 			logger.warn("Card is not inserted");
 			throw new NoSuchElementException("Please insert the card.");
 		}
 
-		BankAccount account = card.getBankAccount();
-		
-		//return only the transactions from the last 30 days.
-		account.setTransactions(account.getTransactions().stream()
-				.filter(t -> Instant.now().minus(30, ChronoUnit.DAYS).compareTo(t.getDate()) < 1)
-				.collect(Collectors.toList()));
-		return account;
+		int account = card.getBankAccount().getBankAccountId();
+
+		return this.bankAccountService.getAccountBalance(account);
 	}
 
 	public BankAccount executeTransaction(Integer cardId, Transaction transaction) {
-		Card card = cardRepository.findById(cardId);
+		Card card = cardRepositoryImpl.findEntityById(cardId);
 		if (card == null) {
 			logger.warn("Card is not inserted");
 			throw new NoSuchElementException("Please insert the card.");
 		}
-		
+
 		if (transaction.getDate().compareTo(Instant.now()) > 1) {
 			logger.warn("Invalid transaction date.");
 			throw new IllegalArgumentException("Invalid transaction date.");
 		}
-		
-		BankAccount bankAccount = card.getBankAccount();
-		switch (transaction.getType()) {
-			case "withdraw": {
-					if (bankAccount.getBalance() - transaction.getAmount() < 0) {
-						throw new IllegalArgumentException("Insufficient funds!");
-					}
-					bankAccount.setBalance(bankAccount.getBalance() - transaction.getAmount());
-					return bankAccountRepository.save(bankAccount);
-				} 
-			case "deposit": {
-					bankAccount.setBalance(bankAccount.getBalance() + transaction.getAmount());
-					return bankAccountRepository.save(bankAccount);
-				} 
-			default: 
-				throw new IllegalArgumentException("Transaction type not supported.");
-		}
+
+		int bankAccount = card.getBankAccount().getBankAccountId();
+		return this.bankAccountService.executeTransaction(bankAccount, transaction);
 	}
 
 }
