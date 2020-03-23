@@ -12,23 +12,25 @@ The service it's exposing 4 api's:
 
 Testing the endpoints:
 
-1. Insert card:
+1. Insert card:  
 
 Successful operation
-	![Insert card successfully](insertCardSuccessful.jpg)
-Throwing exception
-	![Insert card exception](insertCardException.jpg)
+	![Insert card successfully](https://github.com/eusebiuplosnita/atm/blob/master/insertCardSuccessful.JPG)  
 
-2. Delete card
 
-![Delete card](deleteCardSuccess.jpg)
+Throwing exception  
+	![Insert card exception](https://github.com/eusebiuplosnita/atm/blob/master/insertCardException.JPG)
 
-3. Bank account
+2. Delete card  
+
+![Delete card](https://github.com/eusebiuplosnita/atm/blob/master/deleteCardSuccess.JPG)
+
+3. Bank account  
 	Get bank account successfully
-	![Get bank account successfully](getBankAccount.jpg)
+	![Get bank account successfully](https://github.com/eusebiuplosnita/atm/blob/master/getBankAccount.JPG)
 	
 	Get bank account exception
-	![Get bank account exception](getBankAccountException.jpg)
+	![Get bank account exception](https://github.com/eusebiuplosnita/atm/blob/master/getBankAccountException.JPG)
 	
-4. Execute transaction
-	![Execute transaction](executeTransaction.jpg)
+4. Execute transaction  
+	![Execute transaction](https://github.com/eusebiuplosnita/atm/blob/master/executeTransaction.JPG)
