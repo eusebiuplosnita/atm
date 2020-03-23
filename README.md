@@ -34,3 +34,7 @@ Throwing exception
 	
 4. Execute transaction  
 	![Execute transaction](https://github.com/eusebiuplosnita/atm/blob/master/executeTransaction.JPG)
+	
+	
+Starting the application.  
+To start the application you need to connect to an sql server and create the tables cards, bankAccounts and transaction. The creation sql files can be found here: https://github.com/eusebiuplosnita/atm/tree/master/src/main/resources
