@@ -2,6 +2,9 @@ package com.interview.ing.atm.machine.dtos;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionDto {
 
 	private Integer id;

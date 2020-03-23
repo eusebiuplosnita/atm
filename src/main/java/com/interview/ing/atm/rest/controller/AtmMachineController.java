@@ -1,7 +1,5 @@
 package com.interview.ing.atm.rest.controller;
 
-import java.time.Instant;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,24 +28,49 @@ public class AtmMachineController {
 	@Autowired
 	private AtmService atmService;
 
+	/**
+	 * Inserting the card will create the object in the atm.
+	 * 
+	 * @param cardDto The card data transfer ojbect.
+	 * @return Returns the card created on server.
+	 */
 	@PostMapping(path = "/cards", consumes = "application/json", produces = "application/json")
 	public CardDto insertCard(@RequestBody CardDto cardDto) {
 		Card card = atmService.insertCard(modelMapper.map(cardDto, Card.class));
 		return modelMapper.map(card, CardDto.class);
 	}
 
+	/**
+	 * Eject operation will delete the card object from the atm.
+	 * 
+	 * @param cardId The id of the card to be deleted.
+	 */
 	@DeleteMapping("/card/{cardId}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public void ejectCard(@PathVariable String cardId) {
 		atmService.ejectCard(Integer.parseInt(cardId));
 	}
-
+	
+	/**
+	 * Gets the account balance and the transactions from the last 30 days.
+	 * 
+	 * @param cardId The id of the card.
+	 * @return Returns the account balance.
+	 * @throws Exception
+	 */
 	@GetMapping("/card/{cardId}/account")
 	public BankAccount getAccountBalance(@PathVariable String cardId) throws Exception {
-		System.out.println(Instant.now());
 		return atmService.getAccountBalance(Integer.parseInt(cardId));
 	}
-
+	
+	/**
+	 * Executes a transaction(withdraw, deposit,etc.).
+	 * 
+	 * @param cardId The id of the card.
+	 * @param transaction The transaction to be executed.
+	 * @return Returns the bank account.
+	 * @throws Exception
+	 */
 	@PostMapping(path = "/card/{cardId}/account", consumes = "application/json", produces = "application/json")
 	public BankAccount executeTransaction(@PathVariable String cardId, @RequestBody TransactionDto transaction)
 			throws Exception {

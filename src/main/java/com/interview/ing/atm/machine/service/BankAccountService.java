@@ -25,6 +25,12 @@ public class BankAccountService {
 		return bankAccountRepo.findEntityById(id);
 	}
 	
+	/**
+	 * Get the account balance and the transactions from the last 30 days.
+	 * 
+	 * @param id The id of the bank account.
+	 * @return Returns the bank account with a list of transactions from the last 30 days.
+	 */
 	public BankAccount getAccountBalance(Integer id) {
 		BankAccount ba = bankAccountRepo.findEntityById(id);
 		ba.setTransactions(transactionRepo.findByBankAccountId(id).stream()
@@ -33,6 +39,13 @@ public class BankAccountService {
 		return ba;
 	}
 	
+	/**
+	 * Executes a transaction by updating the amount from the account and saving the transaction.
+	 * 
+	 * @param bankAccountId The id of the bank account.
+	 * @param transaction The transaction to be executed.
+	 * @return
+	 */
 	public BankAccount executeTransaction(Integer bankAccountId, Transaction transaction) {
 		BankAccount bankAccount = bankAccountRepo.findEntityById(bankAccountId);
 		
@@ -42,11 +55,19 @@ public class BankAccountService {
 						throw new IllegalArgumentException("Insufficient funds!");
 					}
 					bankAccount.setBalance(bankAccount.getBalance() - transaction.getAmount());
+					
+					transaction.setBankAccount(bankAccount);
+					transaction.setDate(Instant.now());
+					
 					this.transactionRepo.saveEntity(transaction);
 					return bankAccountRepo.saveEntity(bankAccount);
 				} 
 			case "deposit": {
 					bankAccount.setBalance(bankAccount.getBalance() + transaction.getAmount());
+					
+					transaction.setBankAccount(bankAccount);
+					transaction.setDate(Instant.now());
+					
 					this.transactionRepo.saveEntity(transaction);
 					return bankAccountRepo.saveEntity(bankAccount);
 				} 

@@ -11,6 +11,8 @@ public class Transaction {
 	private Double amount;
 	
 	private Instant date;
+	
+	private BankAccount bankAccount;
 
 	public Transaction() {}
 	
@@ -50,5 +52,13 @@ public class Transaction {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public BankAccount getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
 	}
 }
