@@ -2,6 +2,7 @@ package com.interview.ing.atm.machine.entities;
 
 import java.time.Instant;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
+@Cacheable(false)
 @Table(name = "transactions")
 public class TransactionEntity {
 	
@@ -20,7 +22,7 @@ public class TransactionEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JoinColumn(name = "bank_account_id")
+	@JoinColumn(name = "bank_account_id", referencedColumnName = "bank_account_id")
 	@ManyToOne
 	private BankAccountEntity bankAccount;
 
@@ -37,17 +39,17 @@ public class TransactionEntity {
 	
 	public TransactionEntity(Integer id, BankAccountEntity bankAccount, String type, Double amount, Instant date) {
 		this.setId(id);
-		this.setBankAccountId(bankAccount);
+		this.setBankAccount(bankAccount);
 		this.setType(type);
 		this.setDate(date);
 		this.setAmount(amount);
 	}
 	
-	public BankAccountEntity getBankAccountId() {
-		return this.getBankAccountId();
+	public BankAccountEntity getBankAccount() {
+		return this.bankAccount;
 	}
 	
-	public void setBankAccountId(BankAccountEntity bankAccount) {
+	public void setBankAccount(BankAccountEntity bankAccount) {
 		this.bankAccount = bankAccount;
 	}
 

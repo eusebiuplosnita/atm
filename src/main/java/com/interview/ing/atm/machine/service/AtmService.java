@@ -88,11 +88,6 @@ public class AtmService {
 			throw new NoSuchElementException("Please insert the card.");
 		}
 
-		if (transaction.getDate().compareTo(Instant.now()) > 1) {
-			logger.warn("Invalid transaction date.");
-			throw new IllegalArgumentException("Invalid transaction date.");
-		}
-
 		return this.bankAccountService.executeTransaction(card.getBankAccount().getBankAccountId(), transaction);
 	}
 

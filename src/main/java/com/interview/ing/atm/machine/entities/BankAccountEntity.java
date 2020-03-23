@@ -2,6 +2,7 @@ package com.interview.ing.atm.machine.entities;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
+@Cacheable(false)
 @Table(name="bankAccounts")
 public class BankAccountEntity {
 	
@@ -26,7 +28,7 @@ public class BankAccountEntity {
 	@Column(name = "balance")
 	private double balance;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "bankAccount")
 	private List<TransactionEntity> transactions;
 	
 	public BankAccountEntity() {}

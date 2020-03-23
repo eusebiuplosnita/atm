@@ -55,11 +55,19 @@ public class BankAccountService {
 						throw new IllegalArgumentException("Insufficient funds!");
 					}
 					bankAccount.setBalance(bankAccount.getBalance() - transaction.getAmount());
+					
+					transaction.setBankAccount(bankAccount);
+					transaction.setDate(Instant.now());
+					
 					this.transactionRepo.saveEntity(transaction);
 					return bankAccountRepo.saveEntity(bankAccount);
 				} 
 			case "deposit": {
 					bankAccount.setBalance(bankAccount.getBalance() + transaction.getAmount());
+					
+					transaction.setBankAccount(bankAccount);
+					transaction.setDate(Instant.now());
+					
 					this.transactionRepo.saveEntity(transaction);
 					return bankAccountRepo.saveEntity(bankAccount);
 				} 

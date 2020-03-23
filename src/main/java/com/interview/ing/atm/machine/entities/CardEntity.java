@@ -22,7 +22,7 @@ public class CardEntity {
 	@Column(name = "card_id")
 	private Integer cardId;
 	
-	@JoinColumn(name = "bank_account_id")
+	@JoinColumn(name = "bank_account_id",referencedColumnName="bank_account_id")
 	@ManyToOne
 	private BankAccountEntity bankAccount;
 	
